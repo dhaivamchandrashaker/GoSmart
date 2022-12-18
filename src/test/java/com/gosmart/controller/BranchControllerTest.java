@@ -3,6 +3,9 @@ package com.gosmart.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,8 +41,28 @@ public class BranchControllerTest {
 		
 		when(service.insertBranch(branchEntity)).thenThrow(NullPointerException.class);
 		
-		ResponseEntity<Integer> responseEntity=branchController.insertBranch(branchEntity);
-		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,responseEntity.getStatusCode());
+		ResponseEntity<Integer> response=branchController.insertBranch(branchEntity);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+		
+	}
+	
+	
+	@Test
+	public void testGetALLBranches() throws Exception{
+		List<BranchEntity> branchList=new ArrayList<>();
+		
+		when(service.getAllBranches()).thenReturn(branchList);
+		ResponseEntity<List<BranchEntity>> response=branchController.getAllranches();
+		assertEquals(HttpStatus.OK,response.getStatusCode());
+		
+	}
+	@Test
+	public void testGetALLBranches_Exception() throws Exception{
+		List<BranchEntity> branchList=new ArrayList<>();
+		
+		when(service.getAllBranches()).thenThrow(NullPointerException.class);
+		ResponseEntity<List<BranchEntity>> response=branchController.getAllranches();
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
 		
 	}
 }

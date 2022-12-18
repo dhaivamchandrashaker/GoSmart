@@ -1,5 +1,7 @@
 package com.gosmart.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class BranchServiceImpl implements BranchService{
 		Integer branchId=0;
 		
 		try {
+			log.info("{}-serviceImpl insertBranches() saving()",BranchConstants.BRANCH_ENTITY);
 			BranchEntity branchEntity2=repository.save(branchEntity);
 			if(branchEntity2!=null)
 			{
@@ -38,6 +41,19 @@ public class BranchServiceImpl implements BranchService{
 			throw new GoSmartException(e.getMessage());
 		}
 		return branchId;
+	}
+	@Override
+	public List<BranchEntity> getAllBranches() {
+		log.info("{}-serviceImpl getAllBranches() started()",BranchConstants.BRANCH_ENTITY);
+		List<BranchEntity> branches=null;
+		try {
+			log.info("{}-serviceImpl getAllBranches() saving()",BranchConstants.BRANCH_ENTITY);
+			branches=repository.findAll();
+		} catch (Exception e) {
+			log.error("{}-serviceImpl getAllBranches()-{}",BranchConstants.BRANCH_ENTITY,e.getMessage());
+			throw new GoSmartException(e.getMessage());
+		}
+		return branches;
 	}
 	
 	

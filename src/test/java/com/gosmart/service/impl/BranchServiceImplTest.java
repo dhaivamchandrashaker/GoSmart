@@ -4,6 +4,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -34,8 +37,21 @@ public class BranchServiceImplTest {
 		BranchEntity branchEntity=new BranchEntity();
 		when(repository.save(branchEntity)).thenThrow(NullPointerException.class);
 		service.insertBranch(branchEntity);
-		
 	}
 	
+	@Test
+	public void testGetAllBranches() throws Exception{
+		List<BranchEntity> branchList=new ArrayList<>();
+		when(repository.findAll()).thenReturn(branchList);
+		List<BranchEntity> branches=service.getAllBranches();
+		assertNotNull(branches);
+	}
+	
+	@Test(expected = Exception.class)
+	public void testGetAllBranches_Exception() throws Exception{
+		List<BranchEntity> branchList=new ArrayList<>();
+		when(repository.findAll()).thenThrow(NullPointerException.class);
+		service.getAllBranches();
+	}
 	
 }
