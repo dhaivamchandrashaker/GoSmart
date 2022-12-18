@@ -77,10 +77,9 @@ public class BranchControllerTest {
 	@Test
 	public void testGetBranch_Exception() throws Exception{
 		Integer branchId=1;
-		BranchEntity branch=new BranchEntity();
-		when(service.getBranch(branchId)).thenReturn(branch);
+		when(service.getBranch(branchId)).thenThrow(NullPointerException.class);
 		ResponseEntity<BranchEntity> response=branchController.getBranch(branchId);
-		assertNotEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());		
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());		
 	}
 	
 }
