@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,10 +27,10 @@ public class BranchServiceImplTest {
 	@Test
 	public void testInsertBranch() throws Exception{
 		BranchEntity branchEntity=new BranchEntity();
-		BranchEntity branchEntity2=new BranchEntity();
+		BranchEntity branchEntity2=Mockito.any();
 		when(repository.save(branchEntity)).thenReturn(branchEntity2);
 		Integer branchId=service.insertBranch(branchEntity);
-		assertNull(branchId);
+		assertNotNull(branchId);
 		
 	}
 	@Test(expected = Exception.class)
@@ -53,5 +54,22 @@ public class BranchServiceImplTest {
 		when(repository.findAll()).thenThrow(NullPointerException.class);
 		service.getAllBranches();
 	}
-	
+	@Test
+	public void testGetBranch() throws Exception{
+		Integer branchId=1;
+		BranchEntity branchEntity=new BranchEntity();
+		Optional<BranchEntity> branchEntity2=Mockito.any();
+		when(repository.findById(branchId)).thenReturn(branchEntity2);
+		branchEntity= service.getBranch(branchId);
+		assertNotNull(branchId);
+		
+	}
+	@Test
+	public void testGetBranch_Exception() throws Exception{
+		Integer branchId=1;
+		when(repository.findById(branchId)).thenThrow(NullPointerException.class);
+		 service.getBranch(branchId);
+		
+		
+	}
 }

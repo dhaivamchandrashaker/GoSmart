@@ -55,6 +55,20 @@ public class BranchServiceImpl implements BranchService{
 		}
 		return branches;
 	}
+	@Override
+	public BranchEntity getBranch(Integer branchId) {
+		log.info("{}-serviceImpl getBranch() started()",BranchConstants.BRANCH_ENTITY);
+		BranchEntity branchEntity=null;
+		try {
+			log.info("{}-serviceImpl getBranch() saving()",BranchConstants.BRANCH_ENTITY);
+			branchEntity=repository.findByBranchId(branchId);
+		} catch (Exception e) {
+			log.error("{}-serviceImpl getBranch()-{}",BranchConstants.BRANCH_ENTITY,e.getMessage());
+			throw new GoSmartException(e.getMessage());
+		}
+		return branchEntity;
+	
+	}
 	
 	
 	
