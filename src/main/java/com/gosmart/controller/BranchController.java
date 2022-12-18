@@ -40,7 +40,7 @@ public class BranchController {
 	}
 	
 	@GetMapping("/branch/branches")
-	public ResponseEntity<List<BranchEntity>> getAllranches()
+	public ResponseEntity<List<BranchEntity>> getAllBranches()
 	{
 		log.info("{}-Controller getAllranches() started",BranchConstants.BRANCH_ENTITY);
 		try {
